@@ -6,7 +6,7 @@ import { Router, Route, Redirect } from "react-router-dom";
 import { createBrowserHistory } from 'history';
 import Main from 'containers/Main';
 import GlobalStyle from 'commons/styles/global'
-import theme from "./theme";
+import theme from "./commons/styles/theme";
 
 const history = createBrowserHistory()
 

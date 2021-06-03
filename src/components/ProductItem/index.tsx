@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes, { InferProps } from 'prop-types';
+import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import CardActions from "@material-ui/core/CardActions";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import * as Styled from './style';
@@ -18,27 +18,34 @@ const propTypes = {
     price: PropTypes.number,
     description: PropTypes.string
   }).isRequired,
-  onClick: PropTypes.func.isRequired
+  onAdd: PropTypes.func.isRequired
 }
 
 type ProductItemProps = InferProps<typeof propTypes>;
 
-const ProductItem = ({ product, onClick }: ProductItemProps) => (
+const ProductItem = ({ product, onAdd }: ProductItemProps) => (
   <Styled.Card>
-    <CardMedia
+    <Styled.CardMedia
       image={product.image}
     />
+    <Divider />
     <CardContent>
-      <Typography variant="h3">
+      <Typography variant="subtitle1">
         {product.title}
       </Typography>
-      <Typography variant="body2" component="p">
+    </CardContent>
+    <Styled.CardContent>
+      <Typography variant="caption">
         {product.description}
       </Typography>
-    </CardContent>
-    <CardActions>
-      <Button onClick={() => onClick(product)}>compprar</Button>
-    </CardActions>
+    </Styled.CardContent>
+    <Styled.CardActions>
+      <Typography variant="h5" color="secondary">
+        <b>${product.price}</b>
+      </Typography>
+
+      <Button color="primary" variant="contained" onClick={() => onAdd(product)}>Add to Cart</Button>
+    </Styled.CardActions>
   </Styled.Card>
 );
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
@@ -9,8 +9,10 @@ import Typography from '@material-ui/core/Typography';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { useStoreActions, useStoreState, Action } from 'easy-peasy';
 import { Store } from 'store';
-import { Product, ShopModel } from 'store/shop';
-import ProductCartItem from '../ProductCartItem'
+import CartProduct from 'models/cartProduct';
+import Product from 'models/product';
+import ProductCartItem from '../ProductCartItem';
+import ShopContext from 'containers/Main/Context';
 
 interface MouseEventElement {
   currentTarget: HTMLElement
@@ -18,9 +20,11 @@ interface MouseEventElement {
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement>()
-  const cart = useStoreState(({ shop }: Store) => shop.cart)
-  const addToCart: Action<ShopModel, Product> = useStoreActions(({ shop }: Store) => shop.addToCart) as 
-  const removeFromCart: Action<ShopModel, number> = useStoreActions(({ shop }: Store) => shop.removeFromCart) as 
+  // const cart = useStoreState(({ shop }: Store) => shop.cart)
+  // const addToCart: Action<ShopModel, Product> = useStoreActions(({ shop }: Store) => shop.addToCart)
+  // const removeFromCart: Action<ShopModel, number> = useStoreActions(({ shop }: Store) => shop.removeFromCart)
+  const contextData = useContext(ShopContext)
+  console.log('context data', contextData)
   
   const openCart = (event: MouseEventElement) => {
     setAnchorEl(event.currentTarget)
@@ -31,46 +35,61 @@ const Header = () => {
   }
 
   const handleAddProduct = (product: Product) => {
-    addToCart(product)
+    // addToCart(product)
+    console.log('handleAddProduct', product)
   }
 
   const handleRemoveProduct = (productId: number) => {
-    removeFromCart(productId)
+    // removeFromCart(productId)
+    console.log('handleRemoveProduct', productId)
   }
 
-  return (<>
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h2">
-          Shopping
-        </Typography>
+  return (
+    <>
+      <AppBar>
+        <Toolbar>
+          <Grid container alignItems="center" justify="space-between">
+            <Grid item xs>
+              <Typography variant="subtitle1">
+                Shopping
+              </Typography>
+            </Grid>
 
-        <IconButton
-          onClick={openCart}>
-          <Badge badgeContent={cart.length} color="secondary">
-            <ShoppingCartIcon color="inherit" />
-          </Badge>
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+            <Grid item>
+              <IconButton
+                onClick={openCart}>
+                {/* <Badge badgeContent={cart.length} color="secondary">
+                  <ShoppingCartIcon color="inherit" />
+                </Badge> */}
+              </IconButton>
+            </Grid>
+          </Grid>
 
-    <Menu
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={closeCart}>
-      <Typography>Carrinho</Typography>
+        </Toolbar>
+      </AppBar>
 
-      <Grid container direction="column">
-        {cart.map(cartProduct => (
-          <ProductCartItem
-            cartProduct={cartProduct}
-            onAdd={}
-          />
-        ))}
-      </Grid>
-    </Menu>
-  </>);
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={closeCart}>
+        <Typography variant="h2"><b>Carrinho</b></Typography>
+
+        <Grid container direction="column">
+          {/* {cart.map(cartProduct => (
+            <Grid item key={`product-cart-${cartProduct.productId}`}>
+              <ProductCartItem
+                cartProduct={cartProduct}
+                onAdd={handleAddProduct}
+                onRemove={handleRemoveProduct}
+              />
+              <hr />
+            </Grid>
+          ))} */}
+        </Grid>
+      </Menu>
+    </>
+  );
 };
 
 export default Header;

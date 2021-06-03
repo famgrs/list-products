@@ -1,26 +1,6 @@
-import { action, Action } from "easy-peasy";
-import { addProductToCart, removeProductToCart, getTotalCart } from "./helper";
-
-export interface Product {
-  id: number,
-  title: String,
-  image: String,
-  price: number,
-  description: String
-};
-
-export interface CartProduct {
-  productId: number,
-  product: Product,
-  quantity: number
-};
-
-export interface ShopModel {
-  cart: CartProduct[],
-  total: number,
-  addToCart: Action<ShopModel, Product>,
-  removeFromCart: Action<ShopModel, number>
-};
+import { action } from "easy-peasy";
+import { addProductToCart, removeProductFromCart, getTotalCart } from "commons/utils/cart";
+import ShopModel from "models/shop";
 
 const initialState = {
   cart: [],
@@ -37,7 +17,7 @@ const shopModel: ShopModel = {
     state.total = total
   }),
   removeFromCart: action((state, productId) => {
-    const newCart = removeProductToCart(state.cart, productId)
+    const newCart = removeProductFromCart(state.cart, productId)
     const total = getTotalCart(newCart)
 
     state.cart = newCart

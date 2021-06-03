@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   * {
-    box-sizing: border-box;
+    box-sizing: border-box !important;
   }
 
   html,
@@ -16,6 +16,9 @@ export default createGlobalStyle`
 
   .fullHeight {
     height: 100%;
+  }
+  .fullWidth {
+    width: 100%;
   }
 
   .no-scroll {

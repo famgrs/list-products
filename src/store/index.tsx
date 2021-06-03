@@ -1,5 +1,6 @@
 import { createStore } from "easy-peasy";
-import shop, { ShopModel } from './shop';
+import shop from './shop';
+import ShopModel from "models/shop";
 
 export interface Store {
   shop: ShopModel

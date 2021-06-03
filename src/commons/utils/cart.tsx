@@ -1,4 +1,5 @@
-import { CartProduct, Product } from './shop'
+import CartProduct from 'models/cartProduct'
+import Product from 'models/product'
 
 export const addProductToCart = (cart: CartProduct[], product: Product): CartProduct[] => {
   const alreadyInCart = cart.findIndex((it: CartProduct) => it.productId === product.id)
@@ -14,7 +15,7 @@ export const addProductToCart = (cart: CartProduct[], product: Product): CartPro
   return cart
 }
 
-export const removeProductToCart = (cart: CartProduct[], productId: number): CartProduct[] => {
+export const removeProductFromCart = (cart: CartProduct[], productId: number): CartProduct[] => {
   const inCart = cart.findIndex((it: CartProduct) => it.productId === productId)
 
   if (inCart === -1) return cart

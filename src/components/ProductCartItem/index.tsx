@@ -1,17 +1,15 @@
 import React from "react";
 import PropTypes, { InferProps } from 'prop-types';
+import Divider from "@material-ui/core/CardMedia";
 import CardActions from "@material-ui/core/CardActions";
-import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
+import Counter from '../Counter';
 import * as Styled from './style';
 
 const propTypes = {
   cartProduct: PropTypes.shape({
-    productId: PropTypes.number,
+    productId: PropTypes.number.isRequired,
     product: PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
@@ -22,7 +20,7 @@ const propTypes = {
       price: PropTypes.number,
       description: PropTypes.string
     }).isRequired,
-    quantity: PropTypes.number
+    quantity: PropTypes.number.isRequired
   }).isRequired,
   onAdd: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired
@@ -32,11 +30,12 @@ type ProductCartItemProps = InferProps<typeof propTypes>;
 
 const ProductCartItem = ({ cartProduct, onAdd, onRemove }: ProductCartItemProps) => (
   <Styled.Card>
-    <CardMedia
+    <Styled.CardMedia
       image={cartProduct.product.image}
     />
+    <Divider />
     <CardContent>
-      <Typography variant="h3">
+      <Typography variant="h5" noWrap>
         {cartProduct.product.title}
       </Typography>
       <Typography variant="body2" component="p">
@@ -44,17 +43,11 @@ const ProductCartItem = ({ cartProduct, onAdd, onRemove }: ProductCartItemProps)
       </Typography>
     </CardContent>
     <CardActions>
-      <IconButton
-        size="small"
-        onClick={() => onAdd(cartProduct.product)}>
-        <AddIcon />
-      </IconButton>
-      <Typography>{}</Typography>
-      <IconButton
-        size="small"
-        onClick={() => onRemove(cartProduct.productId)}>
-        <RemoveIcon />
-      </IconButton>
+      <Counter
+        counter={cartProduct.quantity}
+        onAdd={onAdd}
+        onRemove={onRemove}
+      />
     </CardActions>
   </Styled.Card>
 );

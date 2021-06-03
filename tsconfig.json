@@ -19,21 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "components/*": [
-        "./components/*"
-      ],
-      "containers/*": [
-        "./containers/*"
-      ],
-      "commons/*": [
-        "./commons/*"
-      ],
-      "store/*": [
-        "./store/*"
-      ]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
