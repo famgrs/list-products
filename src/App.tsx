@@ -4,14 +4,16 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Router, Route, Redirect } from "react-router-dom";
 import { createBrowserHistory } from 'history';
+import { ToastContainer } from 'react-toastify';
 import Main from 'containers/Main';
 import GlobalStyle from 'commons/styles/global'
 import theme from "./commons/styles/theme";
+import "react-toastify/dist/ReactToastify.css";
 
 const history = createBrowserHistory()
 
 function App() {
-  return (
+  return (<>
     <MuiThemeProvider theme={theme}>
       <StyledThemeProvider theme={theme}>
         <CssBaseline />
@@ -24,7 +26,11 @@ function App() {
         </Router>
       </StyledThemeProvider>
     </MuiThemeProvider>
-  );
+    <ToastContainer
+      position="bottom-right"
+      autoClose={3000}
+    />
+  </>);
 }
 
 export default App;

@@ -22,8 +22,7 @@ const Counter = ({ counter, onAdd, onRemove }: CounterProps) => (
     <Grid item>
       <IconButton
         size="small"
-        onClick={() => onRemove()}
-        disabled={counter <= 1}>
+        onClick={() => onRemove()}>
         <RemoveIcon />
       </IconButton>
     </Grid>

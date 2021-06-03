@@ -3,12 +3,10 @@ import styled from 'styled-components';
 export default {
   Wrapper: styled.div`
     ${({ theme }) => theme.breakpoints.up('md')} {
-      padding: 0 10em;
-      padding-top: 80px;
+      padding: 6em 10em 0;
     }
     ${({ theme }) => theme.breakpoints.down('md')} {
-      padding: 0 1em;
-      padding-top: 50px;
+      padding: 6em 1em 0;
     }
   `
 }

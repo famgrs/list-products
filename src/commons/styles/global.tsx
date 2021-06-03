@@ -1,10 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
-  * {
-    box-sizing: border-box !important;
-  }
-
   html,
   body,
   #root {
@@ -20,11 +16,13 @@ export default createGlobalStyle`
   .fullWidth {
     width: 100%;
   }
-
   .no-scroll {
     overflow: hidden;
   }
   .scroll-x {
     overflow-x: auto;
+  }
+  .mh-auto {
+    margin: 0 auto;
   }
 `
