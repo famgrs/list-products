@@ -11,6 +11,7 @@
     "easy-peasy": "^5.0.3",
     "react": "latest",
     "react-dom": "latest",
+    "react-facebook-pixel": "^1.0.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "latest",
     "react-toastify": "^7.0.4",
@@ -36,6 +37,9 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "@types/jest": "^27.4.0",
     "@types/react-router-dom": "^5.1.7",
     "@types/styled-components": "^5.1.9"
   }

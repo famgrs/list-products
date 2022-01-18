@@ -1,4 +1,5 @@
 import React, { ReactText, useCallback, useEffect, useRef, useState } from 'react';
+import ReactPixel, { AdvancedMatching, Options } from 'react-facebook-pixel';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,6 +30,27 @@ const Main = () => {
   }, [])
 
   useEffect(() => {
+    const advancedMatching: AdvancedMatching = {
+      em: 'test-felipe@email.com',
+      fn: 'Felipe',
+      ln: 'Teste',
+      country: 'br',
+      ct: 'Udia',
+      db: '19990101',
+      ge: 'male',
+      ph: '+553499999999',
+      st: 'mg',
+      zp: '38400000'
+    };
+    const options: Options = {
+      autoConfig: true,
+      debug: true
+    };
+    ReactPixel.init(process.env.FACEBOOK_PIXEL_ID || '', advancedMatching, options);
+
+  }, [])
+
+  useEffect(() => {
     getProducts()
   }, [])
 
@@ -40,10 +62,36 @@ const Main = () => {
     toastId.current = toast.success(message)
   }
 
+  const addToCartPixel = (product: Product) => {
+    ReactPixel.track('AddToCart', {
+      content_ids: [product.id],
+      content_name: product.title,
+      value: product.price,
+      currency: 'BRL'
+    })
+  }
+
+  const addToCheckoutPixel = () => {
+    ReactPixel.track('InitiateCheckout', {
+      content_ids: cart.map(it => it.productId),
+      num_items: cart.reduce((sum, it) => sum + it.quantity, 0),
+      contents: cart,
+      value: getTotalCart(cart),
+      currency: 'BRL'
+    })
+  }
+
+  const handleCheckout = () => {
+    addToCheckoutPixel()
+    setCart([])
+    showToast('Checkout efetuado com sucesso!')
+  }
+
   const handleAddProduct = (product: Product) => {
     const newCart = addProductToCart(cart, product)
     setCart(newCart)
     setTotalCart(getTotalCart(newCart))
+    addToCartPixel(product)
     showToast('Produto adicionado com sucesso!')
   }
 
@@ -91,7 +139,7 @@ const Main = () => {
         onRemoveProduct: handleRemoveProduct
       }}>
       <div className="fullWidth">
-        <Header />
+        <Header onCheckout={handleCheckout} />
 
         <Styled.Wrapper className="fullHeight fullWidth">
           <Grid container spacing={2}>

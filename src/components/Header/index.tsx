@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Badge from '@material-ui/core/Badge';
+import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -25,7 +26,11 @@ interface MouseEventElement {
   currentTarget: HTMLElement
 }
 
-const Header = () => {
+interface HeaderProps {
+  onCheckout: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onCheckout }) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement>()
   // const cart = useStoreState(({ shop }: Store) => shop.cart)
   // const addToCart: Action<ShopModel, Product> = useStoreActions(({ shop }: Store) => shop.addToCart)
@@ -108,8 +113,20 @@ const Header = () => {
 
           <Divider />
           <ListItem>
-            <Grid container justify="flex-end">
-              <Typography><b>Total</b>&nbsp;${totalCart.toFixed(2)}</Typography>
+            <Grid container alignItems="center" spacing={2}>
+              <Grid item xs>
+                <Typography><b>Total</b>&nbsp;${totalCart.toFixed(2)}</Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={onCheckout}
+                  disabled={!cart.length}
+                >
+                  Comprar
+                </Button>
+              </Grid>
             </Grid>
           </ListItem>
         </List>
